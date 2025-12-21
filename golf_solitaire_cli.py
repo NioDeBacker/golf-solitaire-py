@@ -20,7 +20,7 @@ FACE_MAPPING = {
     "C": "♣",
     "D": "♢"
 }
-CommandFunc = Callable[[str, Any], None]
+CommandFunc = Callable[[str], str]
 pattern = re.compile(r"^(D\s+([1-7]))|(H)|(S)|(U)|(X)|(R)$", re.I)
 
 def clear_screen():
@@ -31,25 +31,25 @@ def clear_screen():
         os.system('clear')
 game = GolfGame()
 
-def handle_draw(value: str):
+def handle_draw(value: str) -> str:
     col_index = int(value) - 1
     return game.try_draw_card(col_index)
 
-def handle_hit(_value: str):
+def handle_hit(_value: str) -> str:
     return game.draw_from_wastepile()
 
-def handle_help(_value: str):
+def handle_help(_value: str) -> str:
     return "\n".join(command_list)
 
-def handle_undo(_value: str):
+def handle_undo(_value: str)-> str:
     return game.undo()
 
-def handle_exit(_value: str):
+def handle_exit(_value: str) -> str:
     global state
     state = "exit"
     return "Exiting game"
 
-def handle_restart(_value: str):
+def handle_restart(_value: str) -> str:
     global game
     game = GolfGame()
     return "Restart"
@@ -63,7 +63,7 @@ command_map: Dict[str, CommandFunc] = {
         'R': handle_restart,
     }
 
-def handle_parse(command_string: str):
+def handle_parse(command_string: str) -> str:
     match = pattern.match(command_string.strip())
 
     if not match:
@@ -106,5 +106,5 @@ while state != "exit":
     print(game.draw_self())
     print(result)
     print()
-    choice = input("Make your move. Press H for help\n")
+    choice: str = input("Make your move. Press H for help\n")
     result = handle_parse(choice)

@@ -192,7 +192,7 @@ class GolfGame:
             else:
                 line += empty if stockTop is None else f"|***|"
                 line += LINE_SEP
-                line += empty if wasteTop is None else f"|{(wasteTop.value + wasteTop.face).ljust(CARD_WIDTH - 2)}|"
+                line += empty if wasteTop is None else f"|{(wasteTop.value + FACE_MAPPING[wasteTop.face]).ljust(CARD_WIDTH - 2)}|"
             output.append(line)
         return "\n".join(output)  
 
