@@ -132,7 +132,7 @@ class GolfGame:
         if previous_snapshot is None:
             return "No previous moves to undo!"
            
-        self.__dict__.update(previous_snapshot)
+        self.__dict__.update(previous_snapshot) # type: ignore
         return "Undone last move"
     
     def draw_tableau(self) -> str:
@@ -221,7 +221,7 @@ class GolfGame:
             for col in self.tableau:
                 top = col.peek_card()
                 if (top):
-                    if (top.can_place_on_top(self.wastepile.peek_card())):
+                    if (top.can_place_on_top(self.wastepile.peek_card())): # type: ignore
                         allInvalid = False
             return "lose" if allInvalid else "running"
         for col in self.tableau:
