@@ -110,6 +110,16 @@ class GolfGame:
             return "Drew a card from the stockpile"
         return "No more cards on the stockpile"
     
+    def try_put_on_wastepile(self, card: Card) -> bool:
+        topCard = self.wastepile.peek_card()
+        if topCard is not None:
+            if topCard.can_place_on_top(card):
+                self.moves += 1
+                self.wastepile.place_card(card=card)
+                self.movestack.add(self)
+                return True
+        return False
+    
     def try_draw_card(self, row):
         newCard = self.tableau[row].peek_card()
         topCard = self.wastepile.peek_card()
